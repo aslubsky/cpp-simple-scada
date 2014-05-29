@@ -1,0 +1,13 @@
+id: 1;
+db:
+{
+	host: "localhost";
+	username: "root";
+	password: "";
+	database: "scada_db";
+};
+reader:
+{
+	type: "serial";
+	port: "/dev/ttyUSB0";
+};

@@ -17,7 +17,10 @@ int
 main( int    argc,
       char* argv[] )
 {
-	const char* configPath = "";
+	const char *configPath = "";
+	int dataSourceId = 0;
+	config_t cfg;
+	
 	if (argc > 1) {
 		if (strcmp(argv[1], "--config") == 0) {
 			configPath = argv[2];
@@ -28,24 +31,21 @@ main( int    argc,
 		exit(1);
 	}
 
-	config_t cfg;
-
-	config_init(&cfg);
-
-	
+	config_init(&cfg);	
 	if(! config_read_file(&cfg, configPath)) {
 		fprintf(stderr, "%s:%d - %s\n", config_error_file(&cfg),
 		        config_error_line(&cfg), config_error_text(&cfg));
 		config_destroy(&cfg);
 		return(EXIT_FAILURE);
 	}
-
+	
+	if(!config_lookup_int(&cfg, "id", &dataSourceId)) {
+		throw "Data source ID is not defined";
+	}
+	
 	MysqlWriter *w = new MysqlWriter(cfg);
-//	w->saveNumericValue(5.5, 1);
+	SerialReader* r = new SerialReader(cfg);
 
-	SerialReader* r = new SerialReader(cfg);//"/dev/ttyUSB0"
-
-	/*SerialReader* r = new SerialReader("/dev/ttyUSB0");
 	try {
 		r->connect();
 	} catch(const char* s) {
@@ -54,19 +54,17 @@ main( int    argc,
 		 return(EXIT_FAILURE);
 	}
 
-	std::cout << "Read:"
+	std::cout << "Sart read [" << dataSourceId << "]:"
 	          << std::endl;
-	for(int i=0; i<100; i++) {
+			  
+	while(true) {
 		try {
-			std::cout << r->read()
-			          << std::endl;
-			std::cout.flush();
+			w->saveNumericValue(r->read(), dataSourceId);
 		} catch(const char* s) {
 			std::cerr << s
 			          << std::endl;
 		}
-		sleep(1);
-	}*/
+	}
 
 	config_destroy(&cfg);
 	return EXIT_SUCCESS ;
