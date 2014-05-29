@@ -19,6 +19,8 @@ main( int    argc,
 {
 	const char *configPath = "";
 	int dataSourceId = 0;
+	int attemptsLimit;
+	int attemptsCount = 0;
 	config_t cfg;
 	
 	if (argc > 1) {
@@ -39,7 +41,10 @@ main( int    argc,
 		return(EXIT_FAILURE);
 	}
 	
-	if(!config_lookup_int(&cfg, "id", &dataSourceId)) {
+	if(!config_lookup_int(&cfg, "main.attempts_limit", &attemptsLimit)) {
+		attemptsLimit = 100;
+	}
+	if(!config_lookup_int(&cfg, "main.id", &dataSourceId)) {
 		throw "Data source ID is not defined";
 	}
 	
@@ -56,14 +61,23 @@ main( int    argc,
 
 	std::cout << "Sart read [" << dataSourceId << "]:"
 	          << std::endl;
-			  
+
+	
 	while(true) {
 		try {
 			w->saveNumericValue(r->read(), dataSourceId);
 		} catch(const char* s) {
 			std::cerr << s
 			          << std::endl;
+			attemptsCount++;
+		    sleep(2);
 		}
+		if(attemptsCount >= attemptsLimit) {
+			std::cerr << "Overflow attemps limit. Try restart."
+			          << std::endl;
+			return(EXIT_FAILURE);
+		}
+		sleep(1);
 	}
 
 	config_destroy(&cfg);

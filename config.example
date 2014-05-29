@@ -1,4 +1,8 @@
-id: 1;
+main:
+{
+	id: 1;
+	attempts_limit: 100;
+};
 db:
 {
 	host: "localhost";
