@@ -27,6 +27,9 @@
     <File Name="serial_reader.h"/>
     <File Name="config.example"/>
     <File Name="dump.sql"/>
+    <File Name="mod_bus_reader.h"/>
+    <File Name="mod_bus_reader.cpp"/>
+    <File Name="build.sh"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
@@ -44,13 +47,16 @@
         <IncludePath Value="/usr/local/include"/>
         <IncludePath Value="/usr/include/mysql"/>
         <IncludePath Value="/usr/include"/>
+        <IncludePath Value="/usr/include/modbus"/>
       </Compiler>
       <Linker Options="" Required="yes">
         <LibraryPath Value="/usr/local/lib"/>
         <LibraryPath Value="/usr/lib/mysql"/>
+        <LibraryPath Value="/usr/lib"/>
         <Library Value="serial"/>
         <Library Value="mysqlclient"/>
         <Library Value="config"/>
+        <Library Value="modbus"/>
       </Linker>
       <ResourceCompiler Options="" Required="no"/>
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="--config /home/san/Work/cpp/cpp-simple-scada/config.example" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>

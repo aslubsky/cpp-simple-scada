@@ -10,5 +10,5 @@ required libs
 * http://forum.arduino.cc/index.php/topic,39321.0.html - bzero + add ```#include <unistd.h>```
 * 
 ```sh
-apt-get install "libconfig++-dev" libmysqlclient-dev
+apt-get install "libconfig++-dev" libmysqlclient-dev libmodbus-dev
 ```
