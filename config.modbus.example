@@ -1,0 +1,21 @@
+main:
+{
+	id: 2;
+	attempts_limit: 100;
+	debug: true;
+};
+db:
+{
+	host: "localhost";
+	username: "root";
+	password: "";
+	database: "scada_db";
+};
+reader:
+{
+	type: 2;
+	port: "/dev/ttyUSB0";
+	baud_rate: 115200;
+	slave_id: 1;
+	register_number: 3;
+};

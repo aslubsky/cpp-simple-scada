@@ -2,6 +2,9 @@
 #include "serial_reader.h"
 #include <exception>
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <iostream>
 
 
 SerialReader::SerialReader(config_t cfg)
@@ -9,6 +12,10 @@ SerialReader::SerialReader(config_t cfg)
 	this->_connected = false;
 	if(!config_lookup_string(&cfg, "reader.port", &this->_address)) {
 		throw "Reader port is not defined";
+	}
+	
+	if(!config_lookup_bool(&cfg, "main.debug", &this->debug)) {
+		this->debug = false;
 	}
 }
 
@@ -56,7 +63,7 @@ double SerialReader::read()
 	if(this->_connected == false) {
 		this->connect();
 	}
-	char val[10];
+	char val[20];
 	char next_byte;
 	int b = 0;
 	int limit = 1000;
@@ -82,6 +89,9 @@ double SerialReader::read()
 	if(success == false) {
 		//this->_connected = false;
 		throw "Error: Unable to read board value.";
+	}
+	if(this->debug == 1) {
+		std::cout << this->_address << ": " << atof(val) << std::endl;
 	}
 	return atof(val);
 }

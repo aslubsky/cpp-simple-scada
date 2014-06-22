@@ -3,13 +3,15 @@
 
 #include <SerialStream.h>
 #include <libconfig.h>
+#include "data_reader.h"
 
 using namespace LibSerial;
 
-class SerialReader
+class SerialReader : public DataReader
 {
 private:
 	SerialStream _serial_port;
+	int debug;
 	bool _connected;
 	const char *_address;
 

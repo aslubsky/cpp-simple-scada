@@ -2,6 +2,7 @@ main:
 {
 	id: 1;
 	attempts_limit: 100;
+	debug: true;
 };
 db:
 {
@@ -12,6 +13,6 @@ db:
 };
 reader:
 {
-	type: "serial";
-	port: "/dev/ttyUSB0";
+	type: 1;
+	port: "/dev/ttyUSB1";
 };

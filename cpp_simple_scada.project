@@ -25,11 +25,14 @@
     <File Name="mysql_writer.h"/>
     <File Name="serial_reader.cpp"/>
     <File Name="serial_reader.h"/>
-    <File Name="config.example"/>
     <File Name="dump.sql"/>
     <File Name="mod_bus_reader.h"/>
     <File Name="mod_bus_reader.cpp"/>
     <File Name="build.sh"/>
+    <File Name="config.serial.example"/>
+    <File Name="config.modbus.example"/>
+    <File Name="data_reader.h"/>
+    <File Name="data_reader.cpp"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>

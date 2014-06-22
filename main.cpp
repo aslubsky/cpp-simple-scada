@@ -6,7 +6,9 @@
 #include <cstring>
 #include <SerialStream.h>
 #include <stdlib.h>
+#include "data_reader.h"
 #include "serial_reader.h"
+#include "mod_bus_reader.h"
 #include "mysql_writer.h"
 #include <exception>
 #include <libconfig.h>
@@ -18,6 +20,7 @@ main( int    argc,
       char* argv[] )
 {
 	const char *configPath = "";
+	int readerType = 0;
 	int dataSourceId = 0;
 	int attemptsLimit;
 	int attemptsCount = 0;
@@ -47,9 +50,20 @@ main( int    argc,
 	if(!config_lookup_int(&cfg, "main.id", &dataSourceId)) {
 		throw "Data source ID is not defined";
 	}
+	if(!config_lookup_int(&cfg, "reader.type", &readerType)) {
+		throw "Data reader type is not defined";
+	}
+	
+	DataReader *r;
+	if (readerType == 1) {
+		r = new SerialReader(cfg);
+	} else if (readerType == 2) { 
+		r = new ModBusReader(cfg);
+	} else {
+		throw "Data reader type is not defined";
+	}
 	
 	MysqlWriter *w = new MysqlWriter(cfg);
-	SerialReader* r = new SerialReader(cfg);
 
 	try {
 		r->connect();
