@@ -66,5 +66,5 @@ double ModBusReader::read()
 	if(this->debug == 1) {
 		std::cout << this->_address << ": " << tab_reg[0] << std::endl;
 	}
-	return tab_reg[0];
+	return tab_reg[0]/10;
 }
