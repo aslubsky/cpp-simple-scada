@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS `archive_bool` (
   `prev_value` tinyint(1) NOT NULL,
   PRIMARY KEY (`date`,`source_id`),
   KEY `name` (`source_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Data exporting was unselected.
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `archive_numeric` (
   `value` float NOT NULL,
   PRIMARY KEY (`date`,`source_id`),
   KEY `name` (`source_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- Data exporting was unselected.
 

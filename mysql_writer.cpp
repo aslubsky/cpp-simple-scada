@@ -32,6 +32,13 @@ MysqlWriter::MysqlWriter(config_t cfg)
 	                        user, password, database, 0, NULL, 0)) {
 		throw mysql_error(conn);
 	}
+	
+	time_t rawtime;
+	struct tm *timeinfo;
+	time (&rawtime);
+	timeinfo = localtime(&rawtime);
+	strftime(this->numeric_table_name, sizeof(this->numeric_table_name), "archive_numeric_%Y_%m", timeinfo);
+	
 }
 
 MysqlWriter::~MysqlWriter()
@@ -42,7 +49,7 @@ MysqlWriter::~MysqlWriter()
 void MysqlWriter::saveNumericValue(double value, int dataSourceId)
 {
 	std::ostringstream q;  
-	q << "INSERT INTO archive_numeric (date, source_id, value) VALUES(NOW(), " << dataSourceId << ", " << value << ")";
+	q << "INSERT INTO " << this->numeric_table_name << " (date, source_id, value) VALUES(NOW(), " << dataSourceId << ", " << value << ")";
 	//std::cout << q.str() << '\n';
 	std::string tmp1 = q.str();
 	const char* tmp2 = tmp1.c_str();

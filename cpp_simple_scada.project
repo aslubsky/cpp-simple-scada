@@ -35,6 +35,7 @@
     <File Name="data_reader.cpp"/>
     <File Name="memcached_writer.h"/>
     <File Name="memcached_writer.cpp"/>
+    <File Name="make_table.sh"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
