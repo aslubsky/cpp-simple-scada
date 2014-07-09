@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cstring>
+#include <ctime>
 
 using namespace std;
 
@@ -36,15 +37,17 @@ MemcachedWriter::~MemcachedWriter()
 
 void MemcachedWriter::saveNumericValue(double value, int dataSourceId)
 {
-	memcached_return rc;
-
 	char key[32];
-	snprintf(key, sizeof(key), "%d", dataSourceId);
-	char buffer[32];
+	snprintf(key, sizeof(key), "ds_v_%d", dataSourceId);
+	char buffer[80];
 	snprintf(buffer, sizeof(buffer), "%g", value);
+	memcached_set(this->memc, key, strlen(key), buffer, strlen(buffer), (time_t)0, (uint32_t)0);
 
-	rc= memcached_set(this->memc, key, strlen(key), buffer, strlen(buffer), (time_t)0, (uint32_t)0);
-	if (rc != MEMCACHED_SUCCESS) {
-		throw "Key stored successfully";
-	}
+	snprintf(key, sizeof(key), "ds_d_%d", dataSourceId);
+	time_t rawtime;
+	struct tm * timeinfo;
+	time (&rawtime);
+	timeinfo = localtime(&rawtime);
+	strftime(buffer, sizeof(buffer),"%Y-%m-%d %I:%M:%S",timeinfo);
+	memcached_set(this->memc, key, strlen(key), buffer, strlen(buffer), (time_t)0, (uint32_t)0);
 }

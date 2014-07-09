@@ -66,7 +66,7 @@ main( int    argc,
 	}
 	
 	MysqlWriter *w = new MysqlWriter(cfg);
-	//MemcachedWriter
+	MemcachedWriter *mw = new MemcachedWriter(cfg);
 
 	try {
 		r->connect();
@@ -76,13 +76,15 @@ main( int    argc,
 		 return(EXIT_FAILURE);
 	}
 
-	std::cout << "Sart read [" << dataSourceId << "]:"
+	std::cout << "Start read [" << dataSourceId << "]:"
 	          << std::endl;
 
-	
+	double v;
 	while(true) {
 		try {
-			w->saveNumericValue(r->read(), dataSourceId);
+			v = r->read();
+			w->saveNumericValue(v, dataSourceId);
+			mw->saveNumericValue(v, dataSourceId);
 		} catch(const char* s) {
 			std::cerr << s
 			          << std::endl;
