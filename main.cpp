@@ -10,8 +10,10 @@
 #include "serial_reader.h"
 #include "mod_bus_reader.h"
 #include "mysql_writer.h"
+#include "memcached_writer.h"
 #include <exception>
 #include <libconfig.h>
+
 
 using namespace std;
 
@@ -64,6 +66,7 @@ main( int    argc,
 	}
 	
 	MysqlWriter *w = new MysqlWriter(cfg);
+	//MemcachedWriter
 
 	try {
 		r->connect();
