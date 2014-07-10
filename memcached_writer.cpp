@@ -49,6 +49,6 @@ void MemcachedWriter::saveNumericValue(double value, int dataSourceId)
 	struct tm * timeinfo;
 	time (&rawtime);
 	timeinfo = localtime(&rawtime);
-	strftime(buffer, sizeof(buffer),"%Y-%m-%d %I:%M:%S",timeinfo);
+	strftime(buffer, sizeof(buffer),"%Y-%m-%d %H:%M:%S",timeinfo);
 	memcached_set(this->memc, key, strlen(key), buffer, strlen(buffer), (time_t)0, (uint32_t)0);
 }
