@@ -23,6 +23,7 @@ MemcachedWriter::MemcachedWriter(config_t cfg)
 	memcached_return rc;
 
 	this->memc = memcached_create(NULL);
+	this->servers = NULL;
 	this->servers = memcached_server_list_append(this->servers, host, port, &rc);
 
 	rc = memcached_server_push(memc, servers);

@@ -8,7 +8,7 @@
 class MemcachedWriter
 {
 private:
-	memcached_server_st *servers = NULL;
+	memcached_server_st *servers;
 	memcached_st *memc;
 	
 public:
