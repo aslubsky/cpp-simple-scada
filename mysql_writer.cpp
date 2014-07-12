@@ -30,7 +30,7 @@ MysqlWriter::MysqlWriter(config_t cfg)
 	this->conn = mysql_init(NULL);
 	if (!mysql_real_connect(this->conn, server,
 	                        user, password, database, 0, NULL, 0)) {
-		throw mysql_error(conn);
+		throw mysql_error(this->conn);
 	}
 	
 	time_t rawtime;
@@ -55,6 +55,6 @@ void MysqlWriter::saveNumericValue(double value, int dataSourceId)
 	const char* tmp2 = tmp1.c_str();
   
 	if (mysql_query(this->conn, tmp2)) {
-		throw mysql_error(conn);
+		throw mysql_error(this->conn);
 	}
 }

@@ -36,6 +36,9 @@
     <File Name="memcached_writer.h"/>
     <File Name="memcached_writer.cpp"/>
     <File Name="make_table.sh"/>
+    <File Name="sync.cpp"/>
+    <File Name="sync.config"/>
+    <File Name="build-sync.sh"/>
   </VirtualDirectory>
   <Settings Type="Executable">
     <GlobalSettings>
