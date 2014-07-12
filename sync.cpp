@@ -96,6 +96,7 @@ main( int    argc,
 	const char *local_user;
 	const char *local_password;
 	const char *local_database;
+	int local_port;
 	MYSQL *local_conn;
 
 	if(!config_lookup_string(&cfg, "local_db.host", &local_server)) {
@@ -110,10 +111,13 @@ main( int    argc,
 	if(!config_lookup_string(&cfg, "local_db.database", &local_database)) {
 		throw "Local MySQL database is not defined";
 	}
-
+	if(!config_lookup_int(&cfg, "local_db.port", &local_port)) {
+		local_port = 3306;
+	}
+	
 	local_conn = mysql_init(NULL);
 	if (!mysql_real_connect(local_conn, local_server,
-	                        local_user, local_password, local_database, 0, NULL, 0)) {
+	                        local_user, local_password, local_database, local_port, NULL, 0)) {
 		throw mysql_error(local_conn);
 	}
 
@@ -123,6 +127,7 @@ main( int    argc,
 	const char *remote_user;
 	const char *remote_password;
 	const char *remote_database;
+	int remote_port;
 	MYSQL *remote_conn;
 
 	if(!config_lookup_string(&cfg, "remote_db.host", &remote_server)) {
@@ -137,10 +142,13 @@ main( int    argc,
 	if(!config_lookup_string(&cfg, "remote_db.database", &remote_database)) {
 		throw "Remote MySQL database is not defined";
 	}
+	if(!config_lookup_int(&cfg, "remote_db.port", &remote_port)) {
+		remote_port = 3306;
+	}
 
 	remote_conn = mysql_init(NULL);
 	if (!mysql_real_connect(remote_conn, remote_server,
-	                        remote_user, remote_password, remote_database, 0, NULL, 0)) {
+	                        remote_user, remote_password, remote_database, remote_port, NULL, 0)) {
 		throw mysql_error(remote_conn);
 	}
 
