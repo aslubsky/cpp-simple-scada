@@ -24,7 +24,7 @@ void finish_with_error(MYSQL *lcon, MYSQL *rcon)
 void sync_data(char numeric_table_name[100], char *ds_id, char *max_date, MYSQL *local_conn, MYSQL *remote_conn)
 {
 	ostringstream q;
-	q << "SELECT * FROM " << numeric_table_name << " WHERE `date` > '" << max_date << "' AND source_id = " << ds_id << " LIMIT 200";
+	q << "SELECT * FROM " << numeric_table_name << " WHERE `date` > '" << max_date << "' AND source_id = " << ds_id << " LIMIT 500";
 	std::string tmp1 = q.str();
 	const char* tmp2 = tmp1.c_str();
 	if (mysql_query(local_conn, tmp2)) {
