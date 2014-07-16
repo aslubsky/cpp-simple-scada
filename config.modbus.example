@@ -11,6 +11,11 @@ db:
 	password: "";
 	database: "scada_db";
 };
+memcached:
+{
+	host: "localhost";
+	port: 11211;
+};
 reader:
 {
 	type: 2;

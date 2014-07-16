@@ -8,22 +8,32 @@
 
 MysqlWriter::MysqlWriter(config_t cfg)
 {
-	//const char *server, const char *user, const char *password, const char *database
+	this->cfg = cfg;
+}
+
+MysqlWriter::~MysqlWriter()
+{
+	mysql_close(this->conn);
+}
+
+
+void MysqlWriter::connect()
+{
 	const char *server;
 	const char *user;
 	const char *password;
 	const char *database;
 	
-	if(!config_lookup_string(&cfg, "db.host", &server)) {
+	if(!config_lookup_string(&this->cfg, "db.host", &server)) {
 		throw "MySQL host is not defined";
 	}
-	if(!config_lookup_string(&cfg, "db.username", &user)) {
+	if(!config_lookup_string(&this->cfg, "db.username", &user)) {
 		throw "MySQL username is not defined";
 	}
-	if(!config_lookup_string(&cfg, "db.password", &password)) {
+	if(!config_lookup_string(&this->cfg, "db.password", &password)) {
 		throw "MySQL password is not defined";
 	}
-	if(!config_lookup_string(&cfg, "db.database", &database)) {
+	if(!config_lookup_string(&this->cfg, "db.database", &database)) {
 		throw "MySQL database is not defined";
 	}
 
@@ -38,12 +48,6 @@ MysqlWriter::MysqlWriter(config_t cfg)
 	time (&rawtime);
 	timeinfo = localtime(&rawtime);
 	strftime(this->numeric_table_name, sizeof(this->numeric_table_name), "archive_numeric_%Y_%m", timeinfo);
-	
-}
-
-MysqlWriter::~MysqlWriter()
-{
-	mysql_close(this->conn);
 }
 
 void MysqlWriter::saveNumericValue(double value, int dataSourceId)

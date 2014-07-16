@@ -2,6 +2,7 @@
 #include <string>
 #include <stdio.h>
 #include <stdlib.h>
+#include <iostream>
 #include <cstring>
 #include <ctime>
 
@@ -9,13 +10,22 @@ using namespace std;
 
 MemcachedWriter::MemcachedWriter(config_t cfg)
 {
+	this->cfg = cfg;
+}
+
+MemcachedWriter::~MemcachedWriter()
+{
+}
+
+void MemcachedWriter::connect()
+{
 	const char *host;
 	int port = 11211;
 
-	if(!config_lookup_string(&cfg, "memcached.host", &host)) {
+	if(!config_lookup_string(&this->cfg, "memcached.host", &host)) {
 		host = "localhost";
 	}
-	if(!config_lookup_int(&cfg, "memcached.port", &port)) {
+	if(!config_lookup_int(&this->cfg, "memcached.port", &port)) {
 		port = 11211;
 	}
 
@@ -32,12 +42,9 @@ MemcachedWriter::MemcachedWriter(config_t cfg)
 	}
 }
 
-MemcachedWriter::~MemcachedWriter()
-{
-}
-
 void MemcachedWriter::saveNumericValue(double value, int dataSourceId)
 {
+	//std::cout << "MemcachedWriter::saveNumericValue\n";
 	char key[32];
 	snprintf(key, sizeof(key), "ds_v_%d", dataSourceId);
 	char buffer[80];

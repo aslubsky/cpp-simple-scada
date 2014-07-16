@@ -67,9 +67,16 @@ main( int    argc,
 	
 	MysqlWriter *w = new MysqlWriter(cfg);
 	MemcachedWriter *mw = new MemcachedWriter(cfg);
-
+	
 	try {
+		w->connect();
+		std::cout << "MySQL connected" << std::endl;
+			  
+		mw->connect();
+		std::cout << "Memcached connected" << std::endl;
+	
 		r->connect();
+		std::cout << "Data reader connected" << std::endl;
 	} catch(const char* s) {
 		std::cerr << s
 		          << std::endl;

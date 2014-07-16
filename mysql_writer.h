@@ -9,13 +9,13 @@ class MysqlWriter
 {
 private:
 	MYSQL *conn;
-	//MYSQL_RES *res;
-	//MYSQL_ROW row;
+	config_t cfg;
 	char numeric_table_name[100];
 	
 public:
 	MysqlWriter(config_t cfg);
 	~MysqlWriter();
+	void connect();
 	void saveNumericValue(double value, int dataSourceId);
 };
 

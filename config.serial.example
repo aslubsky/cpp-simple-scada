@@ -8,8 +8,13 @@ db:
 {
 	host: "localhost";
 	username: "root";
-	password: "";
+	password: "1";
 	database: "scada_db";
+};
+memcached:
+{
+	host: "localhost2";
+	port: 11211;
 };
 reader:
 {
